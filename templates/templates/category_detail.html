@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>{{ title }}</h2>
+    {% for category in categories %}
+      <h3>{{ category }}</h3>
+      <div class="row">
+        {% for product in category_products[category] %}
+          <div class="col-md-4">
+            <div class="card">
+              <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}">
+              <div class="card-body">
+                <h5 class="card-title">{{ product.title }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <a href="#" class="btn btn-primary">Buy Now</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% empty %}
+      <p>No categories available.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ promotion.title }}</h2>
+  <p>{{ promotion.description }}</p>
+
+  <h3>Products</h3>
+  <ul>
+    {% for product in products %}
+      <li>{{ product.name }}</li>
+    {% empty %}
+      <li>No products available</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

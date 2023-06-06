@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <style>
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffd28f;
+            /* Add other styles for the header */
+        }
+
+        .container {
+            position: relative;
+            padding-top: 100px;
+            /* Adjust the padding to create space for the header */
+        }
+
+        .header-slide-out {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-out;
+        }
+    </style>
+</head>
+<section class="hero">
+    <div id="carousel1" class="carousel slide " data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                {% for product in product_carousel %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <video class="d-block w-100" autoplay muted loop controls="false">
+                        {% if product.large_file %}
+                        <source src="{{ product.large_file }}" type="video/mp4" media="(min-width: 768px)">
+                        {% endif %}
+
+                        <source src="{{ product.small_file }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="carousel-caption">
+                        <h3>{{product.name}}</h3>
+                        <p>{{product.caption}}</p>
+                        <a href="{% url 'all_products' %}" class="btn btn-primary">Shop Now</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel1" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+</section>
+<br>
+<section class="categories">
+    <h2>Shop by category</h2>
+    <div class="card-group">
+        <div class="card border-0">
+            <a href="{% url 'necklaces' %}">
+                <img src="pics/index.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Necklaces</h5>
+                </div>
+            </a>
+        </div>
+        <div class="card border-0">
+            <a href="{% url 'earrings' %}">
+                <img src=" pics/earringex8.jpeg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Earrings</h5>
+                </div>
+            </a>
+        </div>
+        <div class="card border-0">
+            <a href="{% url 'rings' %}">
+                <img src="pics/index1.jpeg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Rings</h5>
+                </div>
+            </a>
+        </div>
+        <div class="card border-0">
+            <a href="{% url 'bracelets' %}">
+                <img src="pics/images5.jpeg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Bracelets</h5>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<br>
+<section class="featured-products">
+    <div class="row">
+        {% for product in featured_products %}
+        <div class="col-lg-4 col-md-6">
+            <div class="card">
+                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-price">{{ product.price }}</p>
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+</section>
+<h2>What's new</h2>
+
+
+<script>
+    window.addEventListener('scroll', function () {
+        var header = document.querySelector('header');
+        var threshold = header.offsetHeight; // Adjust the threshold if needed
+
+        if (window.pageYOffset > threshold) {
+            header.classList.add('header-slide-out');
+        } else {
+            header.classList.remove('header-slide-out');
+        }
+    });
+</script>
+
+
+{% endblock %}
